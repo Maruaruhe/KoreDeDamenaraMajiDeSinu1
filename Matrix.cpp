@@ -155,6 +155,24 @@ Matrix4x4 MakeIdentity4x4() {
 	return resultIdentity;
 }
 
+Matrix4x4 MakeTranslateMatrix(const Vector3& translate) {
+	return{
+		1,0,0,0,
+		0,1,0,0,
+		0,0,1,0,
+		translate.x,translate.y,translate.z,1
+	};
+}
+
+Matrix4x4 MakeScaleMatrix(const Vector3& scale){
+	return{
+		scale.x, 0, 0,0,
+		0, scale.y, 0,0,
+		0, 0, scale.z,0,
+		0,0,0,1
+	};
+}
+
 void MatrixScreenPrint(int x, int y, Matrix4x4& m) {
 
 	for (int row = 0; row < 4; ++row) {
