@@ -213,29 +213,82 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Ve
 	Matrix4x4 rotateZMatrix = MakeRotateZMatrix(rotate.z);
 	Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
 
+	Matrix4x4 resultAffine = {};
+	resultAffine.m[0][0] = scale.x * rotateXYZMatrix.m[0][0];
+	resultAffine.m[0][1] = scale.x * rotateXYZMatrix.m[0][1];
+	resultAffine.m[0][2] = scale.x * rotateXYZMatrix.m[0][2];
+	resultAffine.m[0][3] = 0;
 
-	Matrix4x4 resultMatrix = {};
-	resultMatrix.m[0][0] = scale.x * rotateXYZMatrix.m[0][0];
-	resultMatrix.m[0][1] = scale.x * rotateXYZMatrix.m[0][1];
-	resultMatrix.m[0][2] = scale.x * rotateXYZMatrix.m[0][2];
-	resultMatrix.m[0][3] = 0;
+	resultAffine.m[1][0] = scale.y * rotateXYZMatrix.m[1][0];
+	resultAffine.m[1][1] = scale.y * rotateXYZMatrix.m[1][1];
+	resultAffine.m[1][2] = scale.y * rotateXYZMatrix.m[1][2];
+	resultAffine.m[1][3] = 0;
 
-	resultMatrix.m[1][0] = scale.y * rotateXYZMatrix.m[1][0];
-	resultMatrix.m[1][1] = scale.y * rotateXYZMatrix.m[1][1];
-	resultMatrix.m[1][2] = scale.y * rotateXYZMatrix.m[1][2];
-	resultMatrix.m[1][3] = 0;
+	resultAffine.m[2][0] = scale.z * rotateXYZMatrix.m[2][0];
+	resultAffine.m[2][1] = scale.z * rotateXYZMatrix.m[2][1];
+	resultAffine.m[2][2] = scale.z * rotateXYZMatrix.m[2][2];
+	resultAffine.m[2][3] = 0;
 
-	resultMatrix.m[2][0] = scale.z * rotateXYZMatrix.m[2][0];
-	resultMatrix.m[2][1] = scale.z * rotateXYZMatrix.m[2][1];
-	resultMatrix.m[2][2] = scale.z * rotateXYZMatrix.m[2][2];
-	resultMatrix.m[2][3] = 0;
+	resultAffine.m[3][0] = translate.x;
+	resultAffine.m[3][1] = translate.y;
+	resultAffine.m[3][2] = translate.z;
+	resultAffine.m[3][3] = 1;
 
-	resultMatrix.m[3][0] = translate.x;
-	resultMatrix.m[3][1] = translate.y;
-	resultMatrix.m[3][2] = translate.z;
-	resultMatrix.m[3][3] = 1;
+	return resultAffine;
+}
 
-	return resultMatrix;
+Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip) {
+	Matrix4x4 resultPerspectiveFov = {};
+
+	resultPerspectiveFov.m[0][0] = (1 / aspectRatio) * std::tan(2 / fovY);
+	resultPerspectiveFov.m[0][1] = 0;
+	resultPerspectiveFov.m[0][2] = 0;
+	resultPerspectiveFov.m[0][3] = 0;
+
+	resultPerspectiveFov.m[1][0] = 0;
+	resultPerspectiveFov.m[1][1] = std::tan(2/fovY);
+	resultPerspectiveFov.m[1][2] = 0;
+	resultPerspectiveFov.m[1][3] = 0;
+
+	resultPerspectiveFov.m[2][0] = 0;
+	resultPerspectiveFov.m[2][1] = 0;
+	resultPerspectiveFov.m[2][2] = farClip/(farClip-nearClip);
+	resultPerspectiveFov.m[2][3] = 1;
+
+	resultPerspectiveFov.m[3][0] = 0;
+	resultPerspectiveFov.m[3][1] = 0;
+	resultPerspectiveFov.m[3][2] = (-nearClip * farClip) / (farClip - nearClip);
+	resultPerspectiveFov.m[3][3] = 0;
+
+	return resultPerspectiveFov;
+}
+Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip) {
+
+}
+Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth) {
+	Matrix4x4 resultViewport = {};
+
+	resultViewport.m[0][0] = 2 / width;
+	resultViewport.m[0][1] = 0;
+	resultViewport.m[0][2] = 0;
+	resultViewport.m[0][3] = 0;
+
+	resultViewport.m[1][0] = 0;
+	resultViewport.m[1][1] = -height / 2;
+	resultViewport.m[1][2] = 0;
+	resultViewport.m[1][3] = 0;
+
+	resultViewport.m[2][0] = 0;
+	resultViewport.m[2][1] = 0;
+	resultViewport.m[2][2] = maxDepth - minDepth;
+	resultViewport.m[2][3] = 0;
+
+	resultViewport.m[3][0] = left + width / 2;
+	resultViewport.m[3][1] = top + height / 2;
+	resultViewport.m[3][2] = minDepth;
+	resultViewport.m[3][3] = 1;
+
+	return resultViewport;
 }
 
 void MatrixScreenPrint(int x, int y, Matrix4x4& m) {
