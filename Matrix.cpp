@@ -240,13 +240,13 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Ve
 Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip) {
 	Matrix4x4 resultPerspectiveFov = {};
 
-	resultPerspectiveFov.m[0][0] = (1 / aspectRatio) * std::tan(2 / fovY);
+	resultPerspectiveFov.m[0][0] = (1 / aspectRatio) * (1/std::tan(fovY/2));
 	resultPerspectiveFov.m[0][1] = 0;
 	resultPerspectiveFov.m[0][2] = 0;
 	resultPerspectiveFov.m[0][3] = 0;
 
 	resultPerspectiveFov.m[1][0] = 0;
-	resultPerspectiveFov.m[1][1] = std::tan(2/fovY);
+	resultPerspectiveFov.m[1][1] = (1/std::tan(fovY/2));
 	resultPerspectiveFov.m[1][2] = 0;
 	resultPerspectiveFov.m[1][3] = 0;
 
@@ -263,12 +263,34 @@ Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip
 	return resultPerspectiveFov;
 }
 Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip) {
+	Matrix4x4 resultOrthographic = {};
 
+	resultOrthographic.m[0][0] = 2 / (right - left);
+	resultOrthographic.m[0][1] = 0;
+	resultOrthographic.m[0][2] = 0;
+	resultOrthographic.m[0][3] = 0;
+
+	resultOrthographic.m[1][0] = 0;
+	resultOrthographic.m[1][1] = 2 / (top - bottom);
+	resultOrthographic.m[1][2] = 0;
+	resultOrthographic.m[1][3] = 0;
+
+	resultOrthographic.m[2][0] = 0;
+	resultOrthographic.m[2][1] = 0;
+	resultOrthographic.m[2][2] = 1 / (farClip - nearClip);
+	resultOrthographic.m[2][3] = 0;
+
+	resultOrthographic.m[3][0] = (left + right) / (left - right);
+	resultOrthographic.m[3][1] = (top + bottom) / (bottom - top);
+	resultOrthographic.m[3][2] = nearClip / (nearClip - farClip);
+	resultOrthographic.m[3][3] = 1;
+
+	return resultOrthographic;
 }
 Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth) {
 	Matrix4x4 resultViewport = {};
 
-	resultViewport.m[0][0] = 2 / width;
+	resultViewport.m[0][0] = width / 2;
 	resultViewport.m[0][1] = 0;
 	resultViewport.m[0][2] = 0;
 	resultViewport.m[0][3] = 0;
@@ -291,11 +313,12 @@ Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, f
 	return resultViewport;
 }
 
-void MatrixScreenPrint(int x, int y, Matrix4x4& m) {
+void MatrixScreenPrint(int x, int y, Matrix4x4& m, const char* label) {
 
+	Novice::ScreenPrintf(x, y, "%s", label);
 	for (int row = 0; row < 4; ++row) {
 		for (int column = 0; column < 4; ++column) {
-			Novice::ScreenPrintf(x + column * kColumnWidth, y + row * kRowHeight, "%6.02f", m.m[row][column]);
+			Novice::ScreenPrintf(x + column * kColumnWidth, y + (row + 1) * kRowHeight, "%6.02f", m.m[row][column]);
 		}
 	}
 }

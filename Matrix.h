@@ -33,4 +33,4 @@ Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, f
 float InverseNum(const Matrix4x4& m, int a, int b, int c, int d, int e, int f, int g, int h);
 float InverseNum2(const Matrix4x4& m, int a, int b, int c, int d, int e, int f);
 
-void MatrixScreenPrint(int x, int y, Matrix4x4& m);
+void MatrixScreenPrint(int x, int y, Matrix4x4& m, const char* label);
