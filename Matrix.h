@@ -2,7 +2,7 @@
 #include "main.h"
 #include "Vec3.h"
 #define _USE_MATH_DEFINES
-#include <math.h>
+#include <cmath>
 
 struct Vector3;
 
@@ -19,7 +19,10 @@ Matrix4x4 MakeIdentity4x4();
 
 Matrix4x4 MakeTranslateMatrix(const Vector3& translate);
 Matrix4x4 MakeScaleMatrix(const Vector3& scale);
-Matrix4x4 MakeRotateMatrix(float radian);
+
+Matrix4x4 MakeRotateXMatrix(float radian);
+Matrix4x4 MakeRotateYMatrix(float radian);
+Matrix4x4 MakeRotateZMatrix(float radian);
 
 float InverseNum(const Matrix4x4& m, int a, int b, int c, int d, int e, int f, int g, int h);
 float InverseNum2(const Matrix4x4& m, int a, int b, int c, int d, int e, int f);

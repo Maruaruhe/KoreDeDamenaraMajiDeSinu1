@@ -173,6 +173,39 @@ Matrix4x4 MakeScaleMatrix(const Vector3& scale){
 	};
 }
 
+Matrix4x4 MakeRotateXMatrix(float radian) {
+	float c = std::cos(radian);
+	float s = std::sin(radian);
+	return{
+		1,0,0,0,
+		0,c,s,0,
+		0,-s,c,0,
+		0,0,0,1
+	};
+}
+
+Matrix4x4 MakeRotateYMatrix(float radian) {
+	float c = std::cos(radian);
+	float s = std::sin(radian);
+	return{
+		c,0,-s,0,
+		0,1,0,0,
+		s,0,c,0,
+		0,0,0,1
+	};
+}
+
+Matrix4x4 MakeRotateZMatrix(float radian) {
+	float c = std::cos(radian);
+	float s = std::sin(radian);
+	return{
+		c,s,0,0,
+		-s,c,0,0,
+		0,0,1,0,
+		0,0,0,1
+	};
+}
+
 void MatrixScreenPrint(int x, int y, Matrix4x4& m) {
 
 	for (int row = 0; row < 4; ++row) {
