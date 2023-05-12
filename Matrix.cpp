@@ -206,6 +206,44 @@ Matrix4x4 MakeRotateZMatrix(float radian) {
 	};
 }
 
+Matrix4x4 MakeRotateXYZMatrix(Vector3& rotate) {
+	Matrix4x4 resultMatrix = Multiply(MakeRotateXMatrix(rotate.x), Multiply(MakeRotateYMatrix(rotate.y), MakeRotateXMatrix(rotate.z)));
+	return resultMatrix;
+}
+
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
+	Matrix4x4 scaleMatrix = MakeScaleMatrix(scale);
+	
+	Matrix4x4 rotateXMatrix = MakeRotateXMatrix(rotate.x);
+	Matrix4x4 rotateYMatrix = MakeRotateXMatrix(rotate.y);
+	Matrix4x4 rotateZMatrix = MakeRotateXMatrix(rotate.z);
+	Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
+
+
+	Matrix4x4 resultMatrix = {};
+	resultMatrix.m[0][0] = scale.x * rotateXYZMatrix.m[0][0];
+	resultMatrix.m[0][1] = scale.x * rotateXYZMatrix.m[0][1];
+	resultMatrix.m[0][2] = scale.x * rotateXYZMatrix.m[0][2];
+	resultMatrix.m[0][3] = 0;
+
+	resultMatrix.m[1][0] = scale.y * rotateXYZMatrix.m[1][0];
+	resultMatrix.m[1][1] = scale.y * rotateXYZMatrix.m[1][1];
+	resultMatrix.m[1][2] = scale.y * rotateXYZMatrix.m[1][2];
+	resultMatrix.m[1][3] = 0;
+
+	resultMatrix.m[2][0] = scale.z * rotateXYZMatrix.m[2][0];
+	resultMatrix.m[2][1] = scale.z * rotateXYZMatrix.m[2][1];
+	resultMatrix.m[2][2] = scale.z * rotateXYZMatrix.m[2][2];
+	resultMatrix.m[2][3] = 0;
+
+	resultMatrix.m[3][0] = translate.x;
+	resultMatrix.m[3][1] = translate.y;
+	resultMatrix.m[3][2] = translate.z;
+	resultMatrix.m[3][3] = 1;
+
+	return resultMatrix;
+}
+
 void MatrixScreenPrint(int x, int y, Matrix4x4& m) {
 
 	for (int row = 0; row < 4; ++row) {

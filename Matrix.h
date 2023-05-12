@@ -24,6 +24,10 @@ Matrix4x4 MakeRotateXMatrix(float radian);
 Matrix4x4 MakeRotateYMatrix(float radian);
 Matrix4x4 MakeRotateZMatrix(float radian);
 
+Matrix4x4 MakeRoatateXYZMatrix(Vector3& rotate);
+
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
+
 float InverseNum(const Matrix4x4& m, int a, int b, int c, int d, int e, int f, int g, int h);
 float InverseNum2(const Matrix4x4& m, int a, int b, int c, int d, int e, int f);
 
