@@ -210,8 +210,8 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Ve
 	Matrix4x4 scaleMatrix = MakeScaleMatrix(scale);
 	
 	Matrix4x4 rotateXMatrix = MakeRotateXMatrix(rotate.x);
-	Matrix4x4 rotateYMatrix = MakeRotateXMatrix(rotate.y);
-	Matrix4x4 rotateZMatrix = MakeRotateXMatrix(rotate.z);
+	Matrix4x4 rotateYMatrix = MakeRotateYMatrix(rotate.y);
+	Matrix4x4 rotateZMatrix = MakeRotateZMatrix(rotate.z);
 	Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
 
 

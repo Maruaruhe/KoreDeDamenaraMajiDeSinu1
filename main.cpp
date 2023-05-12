@@ -18,12 +18,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vector3 rotate{ 0.4f,1.43f,-0.8f };
 	Vector3 translate{ 2.7f,-4.15f,1.57f };
 
-	Matrix4x4 rotateXMatrix = MakeRotateXMatrix(rotate.x);
-	Matrix4x4 rotateYMatrix = MakeRotateYMatrix(rotate.y);
-	Matrix4x4 rotateZMatrix = MakeRotateZMatrix(rotate.z);
-
-	Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
-
 	Matrix4x4 worldMatrix = MakeAffineMatrix(scale, rotate, translate);
 
 	// ウィンドウの×ボタンが押されるまでループ
@@ -50,8 +44,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		MatrixScreenPrint(0, 0, worldMatrix);
-
-		MatrixScreenPrint(0, kRowHeight * 5, rotateXYZMatrix);
 
 		///
 		/// ↑描画処理ここまで
