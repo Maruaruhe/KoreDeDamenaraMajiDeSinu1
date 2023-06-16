@@ -1,6 +1,6 @@
 #pragma once
-#include "Matrix4x4.h"
-#include <Vec3.h>
+#include "Matrix.h"
+#include "Vec3.h"
 
 struct Sphere {
 	Vector3 center;
