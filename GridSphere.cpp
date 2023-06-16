@@ -3,18 +3,19 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-void DrawQrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix) {
+void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix) {
 	const float kGridHalfWidth = 2.0f;
 	const uint32_t kSubdivision = 10;
 	const float kGridEvery = (kGridHalfWidth * 2.0f) / float(kSubdivision);
 
 	for (uint32_t xIndex = 0; xIndex <= kSubdivision; ++xIndex) {
-		Novice::DrawLine(xIndex * kGridHalfWidth, 0, xIndex * kGridHalfWidth, kGridEvery, WHITE);
+
+		Novice::DrawLine()
 	}
 
-	for (uint32_t zIndex = 0; zIndex <= kSubdivision; ++zIndex) {
+	/*for (uint32_t zIndex = 0; zIndex <= kSubdivision; ++zIndex) {
 		Novice::DrawLine(0, zIndex * kGridHalfWidth, kGridEvery, zIndex * kGridHalfWidth, WHITE);
-	}
+	}*/
 }
 
 //void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color) {
