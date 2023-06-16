@@ -1,6 +1,7 @@
 #include <Novice.h>
 #include "Matrix.h"
 #include "Vec3.h"
+#include <imgui.h>
 
 const char kWindowTitle[] = "学籍番号";
 
@@ -17,7 +18,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int kWindowWidth = 1280;
 	int kWindowHeight = 720;
 
-
+	Vector3 cameraTranslate{ 0.0f,1.9f,-6.49f };
+	Vector3 cameraRotate{ 0.26f,0.0f,0.0f };
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -32,7 +34,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 	
-
 
 		///
 		/// ↑更新処理ここまで
