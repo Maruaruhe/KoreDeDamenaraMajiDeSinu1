@@ -1,6 +1,7 @@
 #include <Novice.h>
 #include "Matrix.h"
 #include "Vec3.h"
+#include "Line.h"
 #include <imgui.h>
 #include "GridSphere.h"
 
@@ -26,6 +27,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Sphere sphere;
 	sphere.center = { 0.0f, 0.0f, 0.0f};
     sphere.radius = 1.0f;
+
+	Vector3 point{ -1.5f,0.6f,0.6f };
+	Segment segment{ {-2.0f,-1.0f,0.0f},{3.0f,2.0f,2.0f} };
+
+
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
