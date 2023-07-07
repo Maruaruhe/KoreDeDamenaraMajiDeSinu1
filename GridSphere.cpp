@@ -16,9 +16,9 @@ void DrawGrid(const Matrix4x4& worldViewProjectionMatrix, const Matrix4x4& viewp
 		Novice::DrawLine(screenVertices.x, 0, screenVertices.x, kGridEvery, 0xAAAAAAFF);
 	}
 
-	/*for (uint32_t zIndex = 0; zIndex <= kSubdivision; ++zIndex) {
+	for (uint32_t zIndex = 0; zIndex <= kSubdivision; ++zIndex) {
 		Novice::DrawLine(0, zIndex * kGridHalfWidth, kGridEvery, zIndex * kGridHalfWidth, WHITE);
-	}*/
+	}
 }
 
 //void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color) {
