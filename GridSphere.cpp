@@ -9,11 +9,12 @@ void DrawGrid(const Matrix4x4& worldViewProjectionMatrix, const Matrix4x4& viewp
 	const float kGridEvery = (kGridHalfWidth * 2.0f) / float(kSubdivision);
 
 	for (uint32_t xIndex = 0; xIndex <= kSubdivision; ++xIndex) {
-		Vector3 screenVertices;
-		Vector3 kLocalVertices = { 0.0f + xIndex*kGridHalfWidth,0.0f,0.0f };
-		Vector3 ndcVertex = Transform(kLocalVertices, worldViewProjectionMatrix);
-		screenVertices = Transform(ndcVertex, viewportMatrix);
-		Novice::DrawLine(screenVertices.x, 0, screenVertices.x, kGridEvery, 0xAAAAAAFF);
+		Vector3 screenVertices[11];
+		Vector3 kLocalVertices[11];
+		kLocalVertices[xIndex] = {0.0f + xIndex * kGridHalfWidth,0.0f,0.0f};
+		Vector3 ndcVertex = Transform(kLocalVertices[xIndex], worldViewProjectionMatrix);
+		screenVertices[xIndex] = Transform(ndcVertex, viewportMatrix);
+		Novice::DrawLine(screenVertices[xIndex].x, screenVertices[xIndex].y + xIndex * kGridEvery, screenVertices[xIndex].x + kGridEvery, screenVertices[xIndex].y + xIndex * kGridEvery, 0xAAAAAAFF);
 	}
 
 	for (uint32_t zIndex = 0; zIndex <= kSubdivision; ++zIndex) {
