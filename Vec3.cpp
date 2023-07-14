@@ -46,7 +46,7 @@ Vector3 Cross(const Vector3& vector1, const Vector3& vector2) {
 
 Vector3 Project(const Vector3& v1, const Vector3& v2) {
 	Vector3 v;
-	float scalar = Dot()
+	//float scalar = Dot();
 	return v;
 }
 Vector3 ClosestPoint(const Vector3& point, const Vector3& segment) {

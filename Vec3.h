@@ -2,20 +2,33 @@
 #include "Matrix.h"
 #include "assert.h"
 #include "main.h"
-#include "Line.h"
 #include <Novice.h>
 
 struct Matrix4x4;
-
-struct Line;
-struct Ray;
-struct Segment;
 
 struct Vector3
 {
 	float x;
 	float y;
 	float z;
+};
+
+//’¼ü
+struct Line {
+	Vector3 origin;
+	Vector3 diff;
+};
+
+//”¼’¼ü
+struct Ray {
+	Vector3 origin;
+	Vector3 diff;
+};
+
+//ü•ª
+struct Segment {
+	Vector3 origin;
+	Vector3 diff;
 };
 
 Vector3 Add(Vector3 v1, Vector3 v2);

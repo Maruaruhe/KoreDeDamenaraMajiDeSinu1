@@ -1,7 +1,6 @@
 #include <Novice.h>
 #include "Matrix.h"
 #include "Vec3.h"
-#include "Line.h"
 #include <imgui.h>
 #include "GridSphere.h"
 
