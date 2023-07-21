@@ -23,18 +23,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vector3 cameraRotate{ 0.26f,0.0f,0.0f };
 	Vector3 cameraPosition{ 0.0f,0.0f,-5.0f };
 
-	Sphere sphere;
-	sphere.center = { 0.0f, 0.0f, 0.0f};
-    sphere.radius = 1.0f;
+	Sphere sphere1;
+	sphere1.center = { 0.0f, 0.0f, 0.0f};
+    sphere1.radius = 1.0f;
 
-	Vector3 point{ -1.5f,0.6f,0.6f };
-	Segment segment{ {-2.0f,-1.0f,0.0f},{3.0f,2.0f,2.0f} };
-
-	Vector3 project = Project(Subtract(point, segment.origin), segment.diff);
-	Vector3 closestPoint = ClosestPoint(point, segment);
-
-	Sphere pointSphere{ point,0.01f };
-	Sphere closestPointSphere{ closestPoint,0.01f };
+	Sphere sphere2;
+	sphere2.center = { 2.0f, 0.0f, 0.2f };
+	sphere2.radius = 0.2f;
 
 
 
@@ -57,15 +52,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		Matrix4x4 viewProjectionMatrix = Multiply(viewMatrix, projectionMatrix);
 		Matrix4x4 viewportMatrix = MakeViewportMatrix(0, 0, float(kWindowWidth), float(kWindowHeight), 0.0f, 1.0f);
 
-		Vector3 start = Transform(Transform(segment.origin, viewProjectionMatrix), viewportMatrix);
-		Vector3 end = Transform(Transform(Add(segment.origin, segment.diff), viewProjectionMatrix), viewportMatrix);
-
 		ImGui::Begin("Window");
+		ImGui::DragFloat3("Sphere1Center", &sphere1.center.x, 0.01f);
+		ImGui::DragFloat("Sphere1Radius", &sphere1.radius, 0.01f);
+		ImGui::DragFloat3("Sphere2Center", &sphere2.center.x, 0.01f);
+		ImGui::DragFloat("Sphere2Radius", &sphere2.radius, 0.01f);
 		ImGui::DragFloat3("CameraTranslate", &cameraTranslate.x, 0.01f);
 		ImGui::DragFloat3("CameraRotate", &cameraRotate.x, 0.01f);
-		ImGui::DragFloat3("SphereCenter", &sphere.center.x, 0.01f);
-		ImGui::DragFloat("SphereRadius", &sphere.radius, 0.01f);
-		ImGui::InputFloat3("Project", &project.x, "%.3f", ImGuiInputTextFlags_ReadOnly);
 		ImGui::End();
 
 		///
@@ -77,11 +70,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(viewProjectionMatrix, viewportMatrix);
-		//DrawSphere(sphere, Multiply(viewMatrix, projectionMatrix), viewportMatrix, BLACK);
-
-		Novice::DrawLine(int(start.x), int(start.y), int(end.x), int(end.y), WHITE);
-		DrawSphere(pointSphere, viewProjectionMatrix, viewportMatrix, RED);
-		DrawSphere(closestPointSphere, viewProjectionMatrix, viewportMatrix, BLACK);
+		if (IsCollision(sphere1,sphere2)) {
+			DrawSphere(sphere1, Multiply(viewMatrix, projectionMatrix), viewportMatrix, RED);
+		}
+		else {
+			DrawSphere(sphere1, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
+		}
+		DrawSphere(sphere2, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
 
 		///
 		/// ↑描画処理ここまで
