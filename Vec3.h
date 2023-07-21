@@ -33,6 +33,10 @@ struct Segment {
 
 Vector3 Add(Vector3 v1, Vector3 v2);
 Vector3 Subtract(Vector3 v1, Vector3 v2);
+Vector3 Multiply(float scalar, const Vector3& v);
+
+float Length(const Vector3& v);
+Vector3 Normalize(const Vector3& v1);
 
 Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
 float Dot(const Vector3& v1, const Vector3& v2);
@@ -40,6 +44,6 @@ float Dot(const Vector3& v1, const Vector3& v2);
 Vector3 Cross(const Vector3& vector1, const Vector3& vector2);
 
 Vector3 Project(const Vector3& v1, const Vector3& v2);
-Vector3 ClosestPoint(const Vector3& point, const Vector3& segment);
+Vector3 ClosestPoint(const Vector3& point, const Segment& segment);
 
 void VectorScreenPrint(int x, int y, const Vector3& vector, const char* label);

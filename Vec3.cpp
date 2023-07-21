@@ -16,6 +16,37 @@ Vector3 Subtract(Vector3 v1, Vector3 v2) {
 	return result;
 }
 
+Vector3 Multiply(float scalar, const Vector3& v) {
+	Vector3 v3 = { 0, 0, 0 };
+
+	v3.x = scalar * v.x;
+
+	v3.y = scalar * v.y;
+
+	v3.z = scalar * v.z;
+
+	return v3;
+}
+
+float Length(const Vector3& v) {
+	float length = 0;
+
+	length = sqrtf(powf(v.x, 2) + powf(v.y, 2) + powf(v.z, 2));
+
+	return length;
+}
+
+Vector3 Normalize(const Vector3& v1) {
+	Vector3 v2 = { 0, 0, 0 };
+	float length = Length(v1);
+
+	v2.x = v1.x / length;
+	v2.y = v1.y / length;
+	v2.z = v1.z / length;
+
+	return v2;
+}
+
 Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix) {
 	Vector3 result;
 	result.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + vector.z * matrix.m[2][0] + 1.0f * matrix.m[3][0];
@@ -45,14 +76,14 @@ Vector3 Cross(const Vector3& vector1, const Vector3& vector2) {
 }
 
 Vector3 Project(const Vector3& v1, const Vector3& v2) {
-	Vector3 v;
-	//float scalar = Dot();
-	return v;
-}
-Vector3 ClosestPoint(const Vector3& point, const Vector3& segment) {
-	Vector3 v;
+	float scalar = Dot(v1, Normalize(v2));
 
-	return v;
+	return Multiply(scalar, Normalize(v2));
+}
+Vector3 ClosestPoint(const Vector3& point, const Segment& segment) {
+	Vector3 project = Project(Subtract(point, segment.origin), segment.diff);
+	Vector3 cp = Add(segment.origin, project);
+	return cp;
 }
 
 void VectorScreenPrint(int x, int y, const Vector3& vector, const char* label) {
