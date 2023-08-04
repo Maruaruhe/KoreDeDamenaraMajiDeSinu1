@@ -3,6 +3,7 @@
 #include "Vec3.h"
 #include <imgui.h>
 #include "GridSphere.h"
+#include "Plane.h"
 
 const char kWindowTitle[] = "学籍番号";
 
@@ -27,9 +28,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	sphere1.center = { 0.0f, 0.0f, 0.0f};
     sphere1.radius = 1.0f;
 
-	Sphere sphere2;
-	sphere2.center = { 2.0f, 0.0f, 0.2f };
-	sphere2.radius = 0.2f;
+	//Sphere sphere2;
+	//sphere2.center = { 2.0f, 0.0f, 0.2f };
+	//sphere2.radius = 0.2f;
+
+	Plane plane;
+	plane.normal = { 0,1,0 };
+	plane.distance = 1;
 
 
 
@@ -55,11 +60,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::Begin("Window");
 		ImGui::DragFloat3("Sphere1Center", &sphere1.center.x, 0.01f);
 		ImGui::DragFloat("Sphere1Radius", &sphere1.radius, 0.01f);
-		ImGui::DragFloat3("Sphere2Center", &sphere2.center.x, 0.01f);
-		ImGui::DragFloat("Sphere2Radius", &sphere2.radius, 0.01f);
+		/*ImGui::DragFloat3("Sphere2Center", &sphere2.center.x, 0.01f);
+		ImGui::DragFloat("Sphere2Radius", &sphere2.radius, 0.01f);*/
+		ImGui::DragFloat3("PlaneNormal", &plane.normal.x, 0.01f);
+		ImGui::DragFloat("PlaneNormal", &plane.distance, 0.01f);
 		ImGui::DragFloat3("CameraTranslate", &cameraTranslate.x, 0.01f);
 		ImGui::DragFloat3("CameraRotate", &cameraRotate.x, 0.01f);
 		ImGui::End();
+
+		plane.normal = Normalize(plane.normal);
 
 		///
 		/// ↑更新処理ここまで
@@ -70,13 +79,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(viewProjectionMatrix, viewportMatrix);
-		if (IsCollision(sphere1,sphere2)) {
-			DrawSphere(sphere1, Multiply(viewMatrix, projectionMatrix), viewportMatrix, RED);
-		}
-		else {
-			DrawSphere(sphere1, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
-		}
-		DrawSphere(sphere2, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
+		DrawSphere(sphere1, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
+		DrawPlane(plane, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
 
 		///
 		/// ↑描画処理ここまで

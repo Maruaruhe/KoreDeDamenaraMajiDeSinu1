@@ -44,7 +44,7 @@
     <ClCompile Include="GridSphere.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Line.cpp">
+    <ClCompile Include="Plane.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -121,6 +121,6 @@
     <ClInclude Include="Vec3.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="GridSphere.h" />
-    <ClInclude Include="Line.h" />
+    <ClInclude Include="Plane.h" />
   </ItemGroup>
 </Project>
