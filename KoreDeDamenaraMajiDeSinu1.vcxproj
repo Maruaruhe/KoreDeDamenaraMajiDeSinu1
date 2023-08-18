@@ -110,6 +110,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vec3.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +144,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vec3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -3,6 +3,7 @@
 #include "Vec3.h"
 #include <imgui.h>
 #include "GridSphere.h"
+#include "Triangle.h"
 #include "Plane.h"
 
 const char kWindowTitle[] = "学籍番号";
@@ -24,19 +25,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vector3 cameraRotate{ 0.26f,0.0f,0.0f };
 	Vector3 cameraPosition{ 0.0f,0.0f,-5.0f };
 
-
-
-	//Sphere sphere2;
-	//sphere2.center = { 2.0f, 0.0f, 0.2f };
-	//sphere2.radius = 0.2f;
-
-	Plane plane;
-	plane.normal = { 0,1,0 };
-	plane.distance = 1;
-
 	Segment segment;
-	segment.diff = { 0,1,0 };
+	segment.diff = { 1,1,2 };
 	segment.origin = { 0,0,0 };
+
+	Triangle triangle;
+	triangle.vertices[0] = { 0,1,0 };
+	triangle.vertices[1] = { 1,0,0 };
+	triangle.vertices[2] = { -1,0,0 };
+
+	uint32_t segColor = WHITE;
 
 
 	// ウィンドウの×ボタンが押されるまでループ
@@ -61,18 +59,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::Begin("Window");
 		ImGui::DragFloat3("SegmentOrigin", &segment.origin.x, 0.01f);
 		ImGui::DragFloat("SegmentDiff", &segment.diff.x, 0.01f);
-		/*ImGui::DragFloat3("Sphere2Center", &sphere2.center.x, 0.01f);
-		ImGui::DragFloat("Sphere2Radius", &sphere2.radius, 0.01f);*/
-		ImGui::DragFloat3("PlaneNormal", &plane.normal.x, 0.01f);
-		ImGui::DragFloat("PlaneNormal", &plane.distance, 0.01f);
+		ImGui::DragFloat3("Triangle", &triangle.vertices[0].x, 0.01f);
 		ImGui::DragFloat3("CameraTranslate", &cameraTranslate.x, 0.01f);
 		ImGui::DragFloat3("CameraRotate", &cameraRotate.x, 0.01f);
 		ImGui::End();
 
-		plane.normal = Normalize(plane.normal);
-
-		Vector3 start = Transform(Transform(segment.origin, viewProjectionMatrix), viewportMatrix);
-		Vector3 end = Transform(Transform(Add(segment.origin, segment.diff), viewProjectionMatrix), viewportMatrix);
 
 		///
 		/// ↑更新処理ここまで
@@ -83,15 +74,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(viewProjectionMatrix, viewportMatrix);
-
-		DrawPlane(plane, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
-
-		if (IsCollision(segment, plane)) {
-			Novice::DrawLine(int(start.x), int(start.y), int(end.x), int(end.y), RED);
+		if (IsCollision(triangle,segment)) {
+			segColor = RED;
 		}
 		else {
-			Novice::DrawLine(int(start.x), int(start.y), int(end.x), int(end.y), WHITE);
+			segColor = WHITE;
 		}
+		DrawLine(segment, viewProjectionMatrix, viewportMatrix, segColor);
+		DrawTriangle(triangle, viewProjectionMatrix, viewportMatrix, WHITE);
 
 		///
 		/// ↑描画処理ここまで
