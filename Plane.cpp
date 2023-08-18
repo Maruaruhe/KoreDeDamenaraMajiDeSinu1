@@ -35,3 +35,15 @@ bool IsCollision(const Sphere& sphere, const Plane& plane) {
 	}
 	return false;
 }
+
+bool IsCollision(const Segment& segment, const Plane& plane) {
+	float dot = Dot(segment.diff, plane.normal);
+	if ( dot == 0.0f) {
+		return false;
+	}
+	float t = (plane.distance - Dot(segment.origin, plane.normal)) / dot;
+	if (0 <= t && t <= 1) {
+		return true;
+	}
+	return false;
+}

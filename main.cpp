@@ -24,9 +24,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vector3 cameraRotate{ 0.26f,0.0f,0.0f };
 	Vector3 cameraPosition{ 0.0f,0.0f,-5.0f };
 
-	Sphere sphere1;
-	sphere1.center = { 0.0f, 0.0f, 0.0f};
-    sphere1.radius = 1.0f;
+
 
 	//Sphere sphere2;
 	//sphere2.center = { 2.0f, 0.0f, 0.2f };
@@ -36,6 +34,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	plane.normal = { 0,1,0 };
 	plane.distance = 1;
 
+	Segment segment;
+	segment.diff = { 0,1,0 };
+	segment.origin = { 0,0,0 };
 
 
 	// ウィンドウの×ボタンが押されるまでループ
@@ -79,12 +80,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(viewProjectionMatrix, viewportMatrix);
-		if (IsCollision(sphere1, plane)) {
-			DrawSphere(sphere1, Multiply(viewMatrix, projectionMatrix), viewportMatrix, RED);
-		}
-		else {
-			DrawSphere(sphere1, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
-		}
+
 		DrawPlane(plane, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
 
 		///
