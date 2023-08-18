@@ -7,6 +7,9 @@ bool IsCollision(const Triangle& triangle, const Segment& segment) {
 	plane.normal = Normalize(Cross(Subtract(triangle.vertices[1], triangle.vertices[0]),Subtract(triangle.vertices[2], triangle.vertices[1])));
 	plane.distance = Dot(triangle.vertices[0], plane.normal);
 	float dot = Dot(segment.diff, plane.normal);
+	if (dot == 0.0f) {
+		return false;
+	}
 	float t = (plane.distance - Dot(segment.origin, plane.normal)) / dot;
 	if (t < 0 && 1 < t) {
 		return false;
