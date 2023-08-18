@@ -79,7 +79,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		DrawGrid(viewProjectionMatrix, viewportMatrix);
-		DrawSphere(sphere1, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
+		if (IsCollision(sphere1, plane)) {
+			DrawSphere(sphere1, Multiply(viewMatrix, projectionMatrix), viewportMatrix, RED);
+		}
+		else {
+			DrawSphere(sphere1, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
+		}
 		DrawPlane(plane, Multiply(viewMatrix, projectionMatrix), viewportMatrix, WHITE);
 
 		///

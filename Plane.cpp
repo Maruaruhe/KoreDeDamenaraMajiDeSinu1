@@ -29,8 +29,8 @@ void DrawPlane(const Plane& plane, const Matrix4x4& viewProjectionMatrix, const 
 }
 
 bool IsCollision(const Sphere& sphere, const Plane& plane) {
-
-	if (1) {
+	float distance = fabs(Dot(plane.normal, sphere.center) - plane.distance);
+	if (distance<=sphere.radius) {
 		return true;
 	}
 	return false;

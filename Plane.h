@@ -3,6 +3,7 @@
 #include "Matrix.h"
 #include <Novice.h>
 #include "GridSphere.h"
+#include "Vec3.h"
 
 struct Plane {
 	Vector3 normal; //–@ü
