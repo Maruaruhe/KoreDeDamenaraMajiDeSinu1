@@ -4,6 +4,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "Triangle.h"
+#include "GridSphere.h"
 
 struct AABB {
 	Vector3 min;
@@ -12,3 +13,4 @@ struct AABB {
 
 void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
 bool IsCollision(const AABB& a, const AABB& b);
+bool IsCollision(const AABB& a, const Sphere& sphere);

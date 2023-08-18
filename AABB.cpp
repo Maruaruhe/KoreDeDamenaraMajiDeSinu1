@@ -1,4 +1,5 @@
 #include "AABB.h"
+#include <algorithm>
 
 void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color) {
     Vector3 point[8];
@@ -56,6 +57,20 @@ bool IsCollision(const AABB& a, const AABB& b) {
     if ((a.min.x <= b.max.x && a.max.x >= b.min.x) &&
         (a.min.y <= b.max.y && a.max.y >= b.min.y) &&
         (a.min.z <= b.max.z && a.max.z >= b.min.z)) {
+        return true;
+    }
+    return false;
+}
+
+bool IsCollision(const AABB& a, const Sphere& sphere) {
+    Vector3 clossestPoint{
+        std::clamp(sphere.center.x,a.min.x,a.max.x),
+        std::clamp(sphere.center.y,a.min.x,a.max.y),
+        std::clamp(sphere.center.z,a.min.x,a.max.z),
+    };
+    float distance = Length(Subtract(clossestPoint, sphere.center));
+
+    if (distance <= sphere.radius) {
         return true;
     }
     return false;
